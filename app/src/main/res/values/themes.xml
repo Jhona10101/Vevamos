@@ -1,0 +1,39 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- Color de fondo de la splash screen -->
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <!-- La imagen que se mostrará en el centro (estática) -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_splash</item>
+        <!-- Duración total de la animación de salida (fade out) -->
+        <item name="windowSplashScreenAnimationDuration">800</item>
+        <!-- El tema que se aplicará DESPUÉS de que termine la splash screen -->
+        <item name="postSplashScreenTheme">@style/Theme.VeVamos</item>
+    </style>
+    <!-- FIN DEL TEMA DE LA SPLASH SCREEN -->
+    <style name="Theme.VeVamos" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Paleta de Colores Principal -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Forzamos el color de acento a ser el mismo que el primario -->
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorSecondaryVariant">@color/colorPrimary</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <!-- Colores de Superficie y Fondo -->
+        <item name="android:colorBackground">#F5F5F5</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="colorOnSurface">@color/black</item>
+
+        <!-- Color de la barra de estado -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
+        <!-- Aplicamos nuestro estilo personalizado al menú emergente -->
+        <!-- Esto leerá el "styles.xml" de la carpeta "values" -->
+        <item name="popupMenuStyle">@style/CustomPopupMenu</item>
+        <item name="android:popupMenuStyle">@style/CustomPopupMenu</item>
+        <item name="actionOverflowMenuStyle">@style/CustomPopupMenu</item>
+    </style>
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.webpage.vevamos">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- INICIO: PERMISO AÑADIDO -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <!-- FIN: PERMISO AÑADIDO -->
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.VeVamos">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA66YKBaGOCl7Lp4VakEp0-CfmDZKszRR0" />
+
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="true"
+            android:theme="@style/Theme.App.Starting">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- INICIO: LÍNEA AÑADIDA QUE SOLUCIONA EL ERROR -->
+        <activity
+            android:name=".VerificationActivity"
+            android:exported="false" />
+        <!-- FIN: LÍNEA AÑADIDA -->
+
+        <activity android:name=".PhoneAuthActivity" android:exported="false" />
+        <activity android:name=".VerifyCodeActivity" android:exported="false" />
+        <activity android:name=".RegisterOptionsActivity" android:exported="false" />
+        <activity android:name=".EmailLoginActivity" android:exported="false" />
+        <activity android:name=".LoginActivity" android:exported="false" />
+        <activity android:name=".RegisterActivity" android:exported="false" />
+        <activity android:name=".MapPickerActivity" android:exported="false" android:label="Seleccionar Ubicación" />
+        <activity android:name=".ProfileActivity" android:exported="false" android:label="Mi Perfil" android:parentActivityName=".MainActivity" />
+        <activity android:name=".EditProfileActivity" android:exported="false" android:label="Editar Perfil" android:parentActivityName=".ProfileActivity" />
+        <activity android:name=".TripDetailActivity" android:exported="false" android:label="Detalles del Viaje" android:parentActivityName=".MainActivity" />
+        <activity android:name=".MainActivity" android:exported="false" android:label="@string/app_name" />
+        <activity android:name=".PublishTripActivity" android:exported="false" android:label="Publicar Viaje" android:parentActivityName=".MainActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+    </application>
+</manifest>

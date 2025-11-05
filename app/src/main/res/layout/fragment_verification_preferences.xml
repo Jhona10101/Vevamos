@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.VerificationPreferencesFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Preferencias de Viaje"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Conversación"
+            android:textStyle="bold"/>
+        <RadioGroup
+            android:id="@+id/rgConversation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+            <RadioButton android:id="@+id/rbChatty" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Me encanta charlar"/>
+            <RadioButton android:id="@+id/rbQuiet" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Prefiero viajar tranquilo"/>
+            <RadioButton android:id="@+id/rbDependsConversation" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hablo cuando me siento cómodo"/>
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Música"
+            android:textStyle="bold"/>
+        <RadioGroup
+            android:id="@+id/rgMusic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+            <RadioButton android:id="@+id/rbMusicLover" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="¡La música no puede faltar!"/>
+            <RadioButton android:id="@+id/rbNoMusic" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Prefiero el silencio"/>
+            <RadioButton android:id="@+id/rbDependsMusic" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Escucho música dependiendo de la situación"/>
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mascotas"
+            android:textStyle="bold"/>
+        <RadioGroup
+            android:id="@+id/rgPets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+            <RadioButton android:id="@+id/rbPetsAllowed" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Acepto mascotas en mi coche"/>
+            <RadioButton android:id="@+id/rbNoPets" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="No viajo con mascotas"/>
+            <RadioButton android:id="@+id/rbDependsPets" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Viajo con mascotas en función del animal"/>
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fumar"
+            android:textStyle="bold"/>
+        <RadioGroup
+            android:id="@+id/rgSmoking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton android:id="@+id/rbSmokingAllowed" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Acepto paradas para fumar"/>
+            <RadioButton android:id="@+id/rbNoSmoking" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="En mi coche no se fuma"/>
+        </RadioGroup>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvSignOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cerrar sesión"
+        android:paddingVertical="12dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tvDeleteAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Darse de baja"
+        android:textColor="@android:color/holo_red_dark"
+        android:paddingVertical="12dp"
+        android:textSize="16sp"/>
+
+</LinearLayout>

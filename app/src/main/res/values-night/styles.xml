@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Estilo para el menú emergente en MODO NOCHE -->
+    <!-- Hereda del estilo base pero cambia el color del fondo y texto -->
+    <style name="CustomPopupMenu" parent="Widget.Material3.PopupMenu.Overflow">
+        <!-- Fondo oscuro para el menú en modo noche -->
+        <item name="android:popupBackground">#212121</item> <!-- Mismo color que las tarjetas -->
+        <!-- Forzamos el color del texto a blanco -->
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAppearance">@style/CustomPopupTextAppearance.Dark</item>
+    </style>
+
+    <!-- Estilo específico para la apariencia del texto del menú en modo noche -->
+    <style name="CustomPopupTextAppearance.Dark" parent="TextAppearance.AppCompat.Widget.PopupMenu.Small">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+</resources>

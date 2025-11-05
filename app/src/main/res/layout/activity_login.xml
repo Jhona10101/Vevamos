@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/ivClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        app:tint="?attr/colorOnBackground"
+        android:contentDescription="Cerrar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Cómo quieres iniciar sesión?"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginTop="32dp"/>
+
+    <Button
+        android:id="@+id/btnContinueWithEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Continuar con el email"
+        android:drawableStart="@android:drawable/ic_dialog_email"
+        style="@style/Widget.Material3.Button.OutlinedButton"/>
+
+    <Button
+        android:id="@+id/btnContinueWithGoogle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Continuar con Google"
+        android:drawableStart="@drawable/ic_google_logo" />
+    <!-- Crearemos este icono -->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="48dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿Todavía no tienes una cuenta?"/>
+
+        <TextView
+            android:id="@+id/tvGoToRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Regístrate"
+            android:textColor="?attr/colorPrimary"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+</LinearLayout>

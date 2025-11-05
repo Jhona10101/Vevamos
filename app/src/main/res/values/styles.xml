@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Estilo para el menú emergente (soluciona fondo y texto rosado) -->
+    <style name="CustomPopupMenu" parent="Widget.Material3.PopupMenu.Overflow">
+        <!-- Fondo del menú -->
+        <item name="android:popupBackground">@android:color/white</item>
+        <!-- Forzamos el color del texto del menú a ser siempre negro -->
+        <item name="android:textColor">@android:color/black</item>
+        <!-- Hacemos lo mismo con el atributo "textAppearance" para mayor seguridad -->
+        <item name="android:textAppearance">@style/CustomPopupTextAppearance</item>
+    </style>
+
+    <!-- Estilo específico para la apariencia del texto del menú -->
+    <style name="CustomPopupTextAppearance" parent="TextAppearance.AppCompat.Widget.PopupMenu.Small">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+</resources>

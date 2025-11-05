@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1037504033512",
+    "project_id": "veeevamos",
+    "storage_bucket": "veeevamos.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037504033512:android:4be9f1507be9e46ad30f5d",
+        "android_client_info": {
+          "package_name": "com.webpage.vevamos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1037504033512-rug8t780lrkde8642m346gvc46qb5d9k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webpage.vevamos",
+            "certificate_hash": "713f57b81ae949dc5ddc47c6fae1524aa433ee70"
+          }
+        },
+        {
+          "client_id": "1037504033512-s191hgitn3eici0uqi4p05ve2h6280qp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2Fk8isxZ6XS3wiTHy9fplP6n6EjqMKWw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1037504033512-s191hgitn3eici0uqi4p05ve2h6280qp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
