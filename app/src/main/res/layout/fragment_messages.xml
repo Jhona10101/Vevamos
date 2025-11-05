@@ -1,24 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".fragments.MessagesFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mensajes"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:padding="16dp"/>
+    <!--
+        SOLUCIÓN 1: El RecyclerView para mostrar la lista de mensajes.
+        El ID "rv_messages" se convierte en "binding.rvMessages" en tu código Kotlin.
+    -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_messages"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_message" /> <!-- 'item_message' es un ejemplo del layout de cada fila -->
 
+    <!--
+        SOLUCIÓN 2: El TextView para mostrar cuando no hay mensajes.
+        El ID "tv_no_messages" se convierte en "binding.tvNoMessages" en tu código Kotlin.
+    -->
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/tv_no_messages"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="La funcionalidad de chat no está implementada todavía."
-        android:textAlignment="center"
-        android:layout_marginTop="32dp"/>
+        android:text="Aún no tienes mensajes"
+        android:textSize="18sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

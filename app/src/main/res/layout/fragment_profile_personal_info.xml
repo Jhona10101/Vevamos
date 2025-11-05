@@ -1,76 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- He usado un LinearLayout vertical como ejemplo. Puedes usar el que prefieras -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".fragments.ProfilePersonalInfoFragment">
+
+    <!-- Botón o TextView para editar perfil -->
+    <TextView
+        android:id="@+id/tv_edit_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:text="Editar Perfil"
+        android:padding="12dp"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"/>
 
-        <!-- Sección de "Completa tu perfil" -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardCompleteProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Completa tu perfil"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/tvProfileProgress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1 de 4 completado"/>
-                <ProgressBar
-                    android:id="@+id/progressBarProfile"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"/>
-                <TextView
-                    android:id="@+id/tvEditProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Editar datos personales"
-                    android:textColor="?attr/colorPrimary"
-                    android:layout_marginTop="8dp"/>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+    <!-- Separador visual -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
 
-        <!-- Sección de "Verifica tu perfil" -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Verifica tu perfil"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"/>
+    <!--
+        SOLUCIÓN 1: Layout clickable para verificar el perfil.
+        El ID "item_verify_profile" se convierte en "binding.itemVerifyProfile" en Kotlin.
+        He usado un LinearLayout, pero podría ser cualquier ViewGroup (ConstraintLayout, etc.).
+    -->
+    <LinearLayout
+        android:id="@+id/item_verify_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="12dp"
+        android:background="?attr/selectableItemBackground">
+
+        <!--
+            SOLUCIÓN 2: ImageView para el ícono de estado de verificación.
+            El ID "iv_verification_status" se convierte en "binding.ivVerificationStatus" en Kotlin.
+        -->
+        <ImageView
+            android:id="@+id/iv_verification_status"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_add_circle"
+            tools:src="@drawable/ic_add_circle"/>
 
         <LinearLayout
-            android:id="@+id/itemVerifyEmail"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingVertical="8dp">
-            <ImageView
-                android:id="@+id/ivVerifyEmailStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add_circle"/>
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+
+            <!--
+                SOLUCIÓN 3: TextView para el título de la verificación.
+                El ID "tv_verification_title" se convierte en "binding.tvVerificationTitle" en Kotlin.
+            -->
             <TextView
+                android:id="@+id/tv_verification_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="Confirmar correo electrónico"/>
+                android:text="Verificar datos personales"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"/>
+
+            <!--
+                SOLUCIÓN 4: TextView para el estado de la verificación.
+                El ID "tv_verification_status" se convierte en "binding.tvVerificationStatus" en Kotlin.
+            -->
+            <TextView
+                android:id="@+id/tv_verification_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completa los pasos para inspirar confianza."
+                android:visibility="visible"
+                tools:visibility="visible"/>
         </LinearLayout>
-        <!-- Aquí irán los otros items de verificación -->
+
     </LinearLayout>
-</ScrollView>
+
+</LinearLayout>

@@ -1,89 +1,109 @@
-package com.webpage.vevamos.fragments
+package com.example.vevamos // Asegúrate de que este sea tu paquete correcto
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-// import androidx.glance.visibility // <-- ERROR CORREGIDO: Línea eliminada
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.webpage.vevamos.AppMessage
 import com.webpage.vevamos.adapters.MessageAdapter
 import com.webpage.vevamos.databinding.FragmentMessagesBinding
 
+// Asumo que tienes clases como estas, ajusta los nombres si es necesario
+// import com.example.vevamos.adapters.MessageAdapter
+// import com.example.vevamos.models.AppMessage
+
 class MessagesFragment : Fragment() {
 
+    // --- MEJORA 1: Patrón de View Binding seguro para Fragments ---
+    // Esto evita crashes si intentas acceder a la vista después de que haya sido destruida.
     private var _binding: FragmentMessagesBinding? = null
-    // ERROR CORREGIDO: Se elimina la propiedad `binding` para usar solo `_binding` de forma segura.
-    // private val binding get() = _binding!!
+    private val binding get() = _binding!!
 
-    private val db = Firebase.firestore
-    private val currentUser = Firebase.auth.currentUser
+    // --- VARIABLES DE CLASE ---
+    // Mueve las variables que necesitas en todo el fragmento aquí.
+    private lateinit var db: FirebaseFirestore
+    private var currentUser: FirebaseUser? = null
+    private lateinit var messageAdapter: MessageAdapter // Asegúrate de inicializar tu adaptador
 
-    // El adapter se puede inicializar de forma perezosa para mayor seguridad.
-    private val messageAdapter: MessageAdapter by lazy { MessageAdapter(emptyList()) }
+    // --- SOLUCIÓN: Referencia para el Listener de Firestore ---
+    // Esta variable guardará nuestro "oyente" para poder apagarlo después.
+    private var messagesListener: ListenerRegistration? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMessagesBinding.inflate(inflater, container, false)
-        // Se accede a la raíz de la vista (que no es nula aquí) para devolverla.
-        return _binding!!.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // SOLUCIÓN: Usamos el operador `let` para acceder a `_binding` de forma segura.
-        // Todo el código que dependa de las vistas va dentro de este bloque.
-        _binding?.let { binding ->
-            setupRecyclerView(binding)
-            loadMessages(binding)
-        }
+        // Inicializa tus variables aquí
+        db = FirebaseFirestore.getInstance()
+        currentUser = FirebaseAuth.getInstance().currentUser
+        // messageAdapter = MessageAdapter(...) // Aquí debes crear la instancia de tu adaptador
+
+        // Llama a tus funciones de configuración
+        setupRecyclerView()
+        loadMessages()
     }
 
-    // Se pasa `binding` como parámetro para asegurar que no es nulo.
-    private fun setupRecyclerView(binding: FragmentMessagesBinding) {
-        binding.rvMessages.adapter = messageAdapter
+    private fun setupRecyclerView() {
         binding.rvMessages.layoutManager = LinearLayoutManager(context)
+        binding.rvMessages.adapter = messageAdapter
     }
 
-    // Se pasa `binding` como parámetro.
-    private fun loadMessages(binding: FragmentMessagesBinding) {
+    private fun loadMessages() {
+        // Si el usuario no ha iniciado sesión, no hagas nada.
         if (currentUser == null) {
             binding.tvNoMessages.visibility = View.VISIBLE
             return
         }
 
-        db.collection("messages")
-            .whereEqualTo("userId", currentUser.uid)
+        val query = db.collection("messages")
+            .whereEqualTo("userId", currentUser!!.uid) // Usamos !! porque ya comprobamos que no es nulo
             .orderBy("timestamp", Query.Direction.DESCENDING)
-            .addSnapshotListener { snapshots, error ->
-                // IMPORTANTE: Se comprueba que el binding siga existiendo antes de usarlo.
-                // Si el usuario sale de la pantalla, _binding será nulo y esto evitará un crash.
-                val currentBinding = _binding ?: return@addSnapshotListener
 
-                if (error != null) {
-                    // Aquí podrías mostrar un error al usuario.
-                    return@addSnapshotListener
-                }
-
-                if (snapshots != null) {
-                    val messages = snapshots.toObjects(AppMessage::class.java)
-                    messageAdapter.updateMessages(messages)
-                    currentBinding.tvNoMessages.visibility = if (messages.isEmpty()) View.VISIBLE else View.GONE
-                }
+        // --- SOLUCIÓN: Asigna el listener a tu variable ---
+        messagesListener = query.addSnapshotListener { snapshots, error ->
+            // Si la vista ya no existe (el usuario se fue), no hagas nada.
+            if (_binding == null) {
+                return@addSnapshotListener
             }
+
+            // Manejo de errores de Firestore
+            if (error != null) {
+                // Aquí podrías mostrar un Toast o un log con el error.
+                // Log.e("FirestoreError", "Listen failed.", error)
+                return@addSnapshotListener
+            }
+
+            // Procesar los datos recibidos
+            if (snapshots != null) {
+                // val messages = snapshots.toObjects(AppMessage::class.java)
+                // messageAdapter.updateMessages(messages)
+                // binding.tvNoMessages.visibility = if (messages.isEmpty()) View.VISIBLE else View.GONE
+            }
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Limpia la referencia al binding para evitar fugas de memoria.
+
+        // --- SOLUCIÓN: Desconecta el listener ---
+        // Esto es CRUCIAL. Evita que el listener siga funcionando en segundo plano,
+        // previniendo crashes y fugas de memoria (memory leaks).
+        messagesListener?.remove()
+
+        // --- MEJORA 1 (continuación): Limpia la referencia al binding ---
         _binding = null
     }
 }
