@@ -1,4 +1,4 @@
-package com.example.vevamos.fragments// Asegúrate de que este sea tu paquete correcto
+package com.webpage.vevamos.fragments // CORRECCIÓN: Paquete correcto para los fragmentos
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,9 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
-import com.webpage.vevamos.databinding.FragmentMessagesBinding
+import com.webpage.vevamos.AppMessage // CORRECCIÓN: Ruta de importación correcta
+import com.webpage.vevamos.adapters.MessageAdapter // CORRECCIÓN: Ruta de importación correcta
+import com.webpage.vevamos.databinding.FragmentMessagesBinding // CORRECCIÓN: Ruta de importación correcta
 
 class MessagesFragment : Fragment() {
 
@@ -20,7 +22,7 @@ class MessagesFragment : Fragment() {
 
     private lateinit var db: FirebaseFirestore
     private var currentUser: FirebaseUser? = null
-    private lateinit var messageAdapter: MessageAdapter // Declarado aquí
+    private lateinit var messageAdapter: MessageAdapter
 
     private var messagesListener: ListenerRegistration? = null
 
@@ -38,16 +40,11 @@ class MessagesFragment : Fragment() {
         db = FirebaseFirestore.getInstance()
         currentUser = FirebaseAuth.getInstance().currentUser
 
-        // --- ESTA ES LA LÍNEA QUE SOLUCIONA EL CRASH ---
-        // Se inicializa el adaptador con una lista vacía antes de usarlo.
-        messageAdapter = MessageAdapter(emptyList())
-        // --- FIN DE LA SOLUCIÓN ---
-
-        setupRecyclerView() // Ahora esta línea es segura de llamar
+        messageAdapter = MessageAdapter(emptyList()) // Inicializa el adaptador para evitar crashes
+        setupRecyclerView()
         loadMessages()
     }
 
-    // Esta función ahora recibe un adaptador que SÍ existe.
     private fun setupRecyclerView() {
         binding.rvMessages.layoutManager = LinearLayoutManager(context)
         binding.rvMessages.adapter = messageAdapter
@@ -66,7 +63,6 @@ class MessagesFragment : Fragment() {
         messagesListener = query.addSnapshotListener { snapshots, error ->
             if (_binding == null) return@addSnapshotListener
             if (error != null) {
-                // Manejar error
                 return@addSnapshotListener
             }
 
