@@ -5,18 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.webpage.vevamos.R
 import com.webpage.vevamos.UserNotification
-// --- CORRECCIÓN 1: Importar el Binding con el nombre correcto ---
 import com.webpage.vevamos.databinding.ItemNotificationBinding
 
 class NotificationAdapter(
     private var notifications: List<UserNotification>
 ) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
-    // --- CORRECCIÓN 2: Usar el Binding con el nombre correcto aquí también ---
     inner class NotificationViewHolder(val binding: ItemNotificationBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
-        // --- CORRECCIÓN 3: Y aquí también ---
         val binding = ItemNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NotificationViewHolder(binding)
     }
@@ -28,12 +25,10 @@ class NotificationAdapter(
         holder.binding.tvNotificationTitle.text = notification.title
         holder.binding.tvNotificationBody.text = notification.body
 
-        // Lógica inteligente para elegir el ícono según el tipo de notificación
         val iconResId = when (notification.type) {
             "system_verification" -> R.drawable.ic_verified
             "trip_booked" -> R.drawable.ic_pending
-            // Puedes añadir más tipos aquí
-            else -> R.drawable.ic_add_circle // Un ícono por defecto
+            else -> R.drawable.ic_add_circle
         }
         holder.binding.ivNotificationIcon.setImageResource(iconResId)
     }
