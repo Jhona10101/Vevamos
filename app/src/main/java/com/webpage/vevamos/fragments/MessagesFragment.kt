@@ -36,7 +36,7 @@ class MessagesFragment : Fragment() {
         db = FirebaseFirestore.getInstance()
 
         // CORRECCIÓN 2: Inicializamos el NotificationAdapter con una lista vacía
-        notificationAdapter = NotificationAdapter(emptyList())
+        notificationAdapter = NotificationAdapter()
 
         setupRecyclerView()
         loadNotifications()
