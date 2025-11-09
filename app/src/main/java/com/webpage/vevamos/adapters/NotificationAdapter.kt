@@ -5,16 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.webpage.vevamos.R
 import com.webpage.vevamos.UserNotification
+// --- CORRECCIÓN 1: Importar el Binding con el nombre correcto ---
 import com.webpage.vevamos.databinding.ItemNotificationBinding
 
 class NotificationAdapter(
     private var notifications: List<UserNotification>
 ) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
+    // --- CORRECCIÓN 2: Usar el Binding con el nombre correcto aquí también ---
     inner class NotificationViewHolder(val binding: ItemNotificationBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
-        // Asegúrate de que el binding corresponde al nuevo nombre del XML
+        // --- CORRECCIÓN 3: Y aquí también ---
         val binding = ItemNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NotificationViewHolder(binding)
     }
