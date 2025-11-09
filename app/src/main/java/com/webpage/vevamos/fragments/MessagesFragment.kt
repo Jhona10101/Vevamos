@@ -19,7 +19,8 @@ class MessagesFragment : Fragment() {
     private var _binding: FragmentMessagesBinding? = null
     private val binding get() = _binding!!
     private lateinit var db: FirebaseFirestore
-    private lateinit var notificationAdapter: NotificationAdapter // Usamos el nuevo adaptador
+    // CORRECCIÓN 1: Declaramos que usaremos nuestro nuevo NotificationAdapter
+    private lateinit var notificationAdapter: NotificationAdapter
     private var listener: ListenerRegistration? = null
 
     override fun onCreateView(
@@ -33,14 +34,18 @@ class MessagesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         db = FirebaseFirestore.getInstance()
-        notificationAdapter = NotificationAdapter(emptyList()) // Inicializamos el nuevo adaptador
+
+        // CORRECCIÓN 2: Inicializamos el NotificationAdapter con una lista vacía
+        notificationAdapter = NotificationAdapter(emptyList())
+
         setupRecyclerView()
         loadNotifications()
     }
 
     private fun setupRecyclerView() {
         binding.rvMessages.layoutManager = LinearLayoutManager(context)
-        binding.rvMessages.adapter = notificationAdapter // Lo asignamos al RecyclerView
+        // CORRECCIÓN 3: Le decimos al RecyclerView que use nuestro nuevo adaptador
+        binding.rvMessages.adapter = notificationAdapter
     }
 
     private fun loadNotifications() {
@@ -50,16 +55,20 @@ class MessagesFragment : Fragment() {
             return
         }
 
-        // --- CAMBIO MÁS IMPORTANTE ---
-        // Ahora escuchamos la colección "user_notifications"
+        // --- CORRECCIÓN MÁS IMPORTANTE ---
+        // Ahora sí, escuchamos la colección correcta: "user_notifications"
         val query = db.collection("user_notifications")
             .whereEqualTo("userId", currentUser.uid)
             .orderBy("timestamp", Query.Direction.DESCENDING)
 
         listener = query.addSnapshotListener { snapshots, error ->
-            if (_binding == null || error != null) return@addSnapshotListener
+            if (_binding == null || error != null) {
+                // Si hay un error o la vista ya no existe, no hacemos nada
+                return@addSnapshotListener
+            }
+
             if (snapshots != null) {
-                // Usamos el nuevo molde "UserNotification"
+                // Usamos nuestro nuevo molde de datos "UserNotification"
                 val notifications = snapshots.toObjects(UserNotification::class.java)
                 notificationAdapter.updateNotifications(notifications)
                 binding.tvNoMessages.visibility = if (notifications.isEmpty()) View.VISIBLE else View.GONE
@@ -69,7 +78,7 @@ class MessagesFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        listener?.remove() // Detenemos la escucha para evitar errores
+        listener?.remove() // Detenemos la escucha para evitar fugas de memoria
         _binding = null
     }
 }
