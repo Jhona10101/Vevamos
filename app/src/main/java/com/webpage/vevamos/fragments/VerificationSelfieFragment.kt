@@ -5,18 +5,36 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import com.webpage.vevamos.VerificationActivity
 import com.webpage.vevamos.databinding.FragmentVerificationSelfieBinding
+import java.io.File
 
 class VerificationSelfieFragment : Fragment() {
 
     private var _binding: FragmentVerificationSelfieBinding? = null
-    val binding get() = _binding!!
-    var imageUri: Uri? = null // Variable para guardar la URI de la foto
+    private val binding get() = _binding!!
+    private var imageUri: Uri? = null
+
+    // --- LÓGICA AÑADIDA: Declarar el "lanzador" que abre la cámara ---
+    private val takePictureLauncher = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { success ->
+        if (success) {
+            // La foto se guardó en la 'imageUri'.
+            // Mostramos el check de éxito en la UI.
+            binding.ivCheckSelfie.visibility = View.VISIBLE
+            Toast.makeText(requireContext(), "Selfie capturada", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(requireContext(), "Captura cancelada", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentVerificationSelfieBinding.inflate(inflater, container, false)
@@ -25,16 +43,26 @@ class VerificationSelfieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnTakeSelfie.setOnClickListener {
-            // Llama a la función de la Activity para abrir la cámara
-            (activity as? VerificationActivity)?.launchCamera()
+
+        // --- CORRECCIÓN PRINCIPAL ---
+        // Usamos el ID correcto de tu CardView ('cardSelfie')
+        binding.cardSelfie.setOnClickListener {
+            // Creamos una URI temporal para la foto
+            imageUri = createImageUri()
+            // Usamos el lanzador para abrir la cámara
+            takePictureLauncher.launch(imageUri)
         }
     }
 
-    // Función para que la Activity actualice la imagen
-    fun setImage(uri: Uri?) {
-        imageUri = uri
-        binding.ivSelfie.setImageURI(uri)
+    // --- LÓGICA AÑADIDA: Función para crear una URI segura ---
+    private fun createImageUri(): Uri? {
+        val context = requireContext()
+        val imageFile = File.createTempFile("temp_selfie_photo_", ".jpg", context.cacheDir)
+        return FileProvider.getUriForFile(
+            context,
+            "${context.packageName}.provider", // Esto debe coincidir con tu Manifest
+            imageFile
+        )
     }
 
     override fun onDestroyView() {
