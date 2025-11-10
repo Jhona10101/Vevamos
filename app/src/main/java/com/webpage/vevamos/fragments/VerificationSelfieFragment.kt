@@ -18,13 +18,10 @@ class VerificationSelfieFragment : Fragment() {
     private val binding get() = _binding!!
     private var imageUri: Uri? = null
 
-    // --- LÓGICA AÑADIDA: Declarar el "lanzador" que abre la cámara ---
     private val takePictureLauncher = registerForActivityResult(
         ActivityResultContracts.TakePicture()
     ) { success ->
         if (success) {
-            // La foto se guardó en la 'imageUri'.
-            // Mostramos el check de éxito en la UI.
             binding.ivCheckSelfie.visibility = View.VISIBLE
             Toast.makeText(requireContext(), "Selfie capturada", Toast.LENGTH_SHORT).show()
         } else {
@@ -33,8 +30,7 @@ class VerificationSelfieFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentVerificationSelfieBinding.inflate(inflater, container, false)
@@ -44,23 +40,18 @@ class VerificationSelfieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // --- CORRECCIÓN PRINCIPAL ---
-        // Usamos el ID correcto de tu CardView ('cardSelfie')
         binding.cardSelfie.setOnClickListener {
-            // Creamos una URI temporal para la foto
             imageUri = createImageUri()
-            // Usamos el lanzador para abrir la cámara
             takePictureLauncher.launch(imageUri)
         }
     }
 
-    // --- LÓGICA AÑADIDA: Función para crear una URI segura ---
     private fun createImageUri(): Uri? {
         val context = requireContext()
         val imageFile = File.createTempFile("temp_selfie_photo_", ".jpg", context.cacheDir)
         return FileProvider.getUriForFile(
             context,
-            "${context.packageName}.provider", // Esto debe coincidir con tu Manifest
+            "${context.packageName}.provider",
             imageFile
         )
     }
